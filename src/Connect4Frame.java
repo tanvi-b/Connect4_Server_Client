@@ -18,7 +18,7 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
     public Connect4Frame(GameData gameData, ObjectOutputStream os, char player)
     {
-        super("TTT Game");
+        super("Connect4 Game");
         // sets the attributes
         this.gameData = gameData;
         this.os = os;
@@ -32,9 +32,9 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
         // Set initial frame message
         if(player == 'X')
-            text = "Waiting for O to Connect";
+            text = "Waiting for Black to Connect";
 
-        setSize(400,460);
+        setSize(485,450);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
@@ -43,7 +43,7 @@ public class Connect4Frame extends JFrame implements KeyListener {
     public void paint(Graphics g)
     {
         // draws the background
-        g.setColor(Color.BLACK);
+        g.setColor(Color.YELLOW);
         g.fillRect(0,0,getWidth(),getHeight());
 
         // draws the display text to the screen
