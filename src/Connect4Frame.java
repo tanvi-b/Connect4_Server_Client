@@ -53,9 +53,9 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
         // draws the tic-tac-toe grid lines to the screen
         g.setColor(Color.RED);
-        for(int y =0;y<=1; y++)
+        for(int y =0;y<6; y++)
             g.drawLine(0,(y+1)*133+60,getWidth(),(y+1)*133+60);
-        for(int x =0;x<=1; x++)
+        for(int x =0;x<7; x++)
             g.drawLine((x+1)*133,60,(x+1)*133,getHeight());
 
         // draws the player moves to the screen
