@@ -36,15 +36,21 @@ public class ClientListener implements Runnable
                 }
                 else if (cfs.getCommand()== CommandFromServer.TIE)
                 {
-                    frame.setText("Tie Game (R to reset)");
+                    frame.setText("Tie Game");
                 }
-                else if (cfs.getCommand()== CommandFromServer.RED_WINS)
+                else if (cfs.getCommand()==CommandFromServer.RED_WINS)
                 {
-                    frame.setText("X wins! (R to reset)");
+                    if (cfs.getCommand()==CommandFromServer.CONNECTED_AS_RED)
+                        frame.setText("You Win!");
+                    else
+                        frame.setText("You Lose!");
                 }
                 else if (cfs.getCommand()== CommandFromServer.BLACK_WINS)
                 {
-                    frame.setText("O wins! (R to reset)");
+                    if (cfs.getCommand()==CommandFromServer.CONNECTED_AS_BLACK)
+                        frame.setText("You Win!");
+                    else
+                        frame.setText("You Lose!");
                 }
             }
         }

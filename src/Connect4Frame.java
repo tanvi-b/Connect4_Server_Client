@@ -31,10 +31,10 @@ public class Connect4Frame extends JFrame implements KeyListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Set initial frame message
-        if(player == 'X')
+        if(player == 'R')
             text = "Waiting for Black to Connect";
 
-        setSize(485,450);
+        setSize(800,700);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
@@ -47,16 +47,29 @@ public class Connect4Frame extends JFrame implements KeyListener {
         g.fillRect(0,0,getWidth(),getHeight());
 
         // draws the display text to the screen
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.setFont(new Font("Times New Roman",Font.BOLD,30));
-        g.drawString(text,20,55);
+        FontMetrics fm = g.getFontMetrics();
+        int textWidth = fm.stringWidth(text);
+        int begin = (800 - textWidth) / 2;
+        g.drawString(text, begin, 70);
 
         // draws the circles to the screen
         g.setColor(Color.WHITE);
-        for(int y =0;y<6; y++)
-            g.drawOval(0,(y+1)*133,getWidth(),(y+1)*133);
-        for(int x =0;x<7; x++)
-            g.drawOval((x+1)*133,60,(x+1)*133,getHeight());
+        int circleWidth = 75;
+        int circleHeight = 75;
+        int startX = 75;
+        int startY = 100;
+        int spacingX = (getWidth()-75*2-7 * circleWidth)/6;
+        int spacingY = (getHeight()-75*2-6 * circleHeight)/5;
+
+        for (int y = 0; y < 6; y++) {
+            for (int x = 0; x < 7; x++) {
+                int circleX = startX + x * (circleWidth + spacingX);
+                int circleY = startY + y * (circleHeight + spacingY);
+                g.fillOval(circleX, circleY, circleWidth, circleHeight);
+            }
+        }
 
         // draws the player moves to the screen
         g.setFont(new Font("Times New Roman",Font.BOLD,70));
@@ -73,10 +86,13 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
     public void setTurn(char turn) {
         if(turn==player)
-            text = "Your turn";
+            text = "Your Turn";
         else
         {
-            text = turn+"'s turn.";
+            if (turn=='R')
+                text = "Red's Turn.";
+            else
+                text = "Black's Turn.";
         }
         repaint();
     }

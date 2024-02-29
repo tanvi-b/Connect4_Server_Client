@@ -3,6 +3,9 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+//red is x
+//black is o
+
 public class ServerMain
 {
     public static void main(String[] args)
@@ -12,34 +15,33 @@ public class ServerMain
             // creates a socket that allows connections on port 8001
             ServerSocket serverSocket = new ServerSocket(8001);
 
-            // allow X to connect and build streams to / from X
+            // allow Red (X) to connect and build streams to / from Red
             Socket xCon = serverSocket.accept();
             ObjectOutputStream xos = new ObjectOutputStream(xCon.getOutputStream());
             ObjectInputStream xis = new ObjectInputStream(xCon.getInputStream());
 
-            // Lets the client know they are the X player
+            // Lets the client know they are the Red player
             xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_RED,null));
-            System.out.println("X has Connected.");
+            System.out.println("You have connected as RED");
 
-            // Creates a Thread to listen to the X client
-            ServersListener sl = new ServersListener(xis,xos,'X');
+            // Creates a Thread to listen to the Red client
+            ServersListener sl = new ServersListener(xis,xos,'R');
             Thread t = new Thread(sl);
             t.start();
 
-            // allow O to connect and build streams to / from O
+            // allow Black (O) to connect and build streams to / from Black
             Socket oCon = serverSocket.accept();
             ObjectOutputStream oos = new ObjectOutputStream(oCon.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(oCon.getInputStream());
 
-            // Lets the client know they are the X player
+            // Lets the client know they are the Black player
             oos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_BLACK,null));
-            System.out.println("O has Connected.");
+            System.out.println("You have connected as BLACK");
 
-            // Creates a Thread to listen to the X client
-            sl = new ServersListener(ois,oos,'O');
+            // Creates a Thread to listen to the Black client
+            sl = new ServersListener(ois,oos,'B');
             t = new Thread(sl);
             t.start();
-
 
             xos.writeObject(new CommandFromServer(CommandFromServer.RED_TURN,null));
             oos.writeObject(new CommandFromServer(CommandFromServer.RED_TURN,null));
