@@ -31,7 +31,7 @@ public class Connect4Frame extends JFrame implements KeyListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Set initial frame message
-        if(player == 'X')
+        if(player == 'R')
             text = "Waiting for Black to Connect";
 
         setSize(800,700);
@@ -47,9 +47,12 @@ public class Connect4Frame extends JFrame implements KeyListener {
         g.fillRect(0,0,getWidth(),getHeight());
 
         // draws the display text to the screen
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.setFont(new Font("Times New Roman",Font.BOLD,30));
-        g.drawString(text,20,55);
+        FontMetrics fm = g.getFontMetrics();
+        int textWidth = fm.stringWidth(text);
+        int begin = (800 - textWidth) / 2;
+        g.drawString(text, begin, 70);
 
         // draws the circles to the screen
         g.setColor(Color.WHITE);
@@ -83,10 +86,13 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
     public void setTurn(char turn) {
         if(turn==player)
-            text = "Your turn";
+            text = "Your Turn";
         else
         {
-            text = turn+"'s turn.";
+            if (turn=='R')
+                text = "Red's Turn.";
+            else
+                text = "Black's Turn.";
         }
         repaint();
     }

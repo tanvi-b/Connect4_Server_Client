@@ -22,7 +22,7 @@ public class ServerMain
 
             // Lets the client know they are the Red player
             xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_RED,null));
-            System.out.println("Red has Connected.");
+            System.out.println("You have connected as RED");
 
             // Creates a Thread to listen to the Red client
             ServersListener sl = new ServersListener(xis,xos,'R');
@@ -36,7 +36,7 @@ public class ServerMain
 
             // Lets the client know they are the Black player
             oos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_BLACK,null));
-            System.out.println("Black has Connected.");
+            System.out.println("You have connected as BLACK");
 
             // Creates a Thread to listen to the Black client
             sl = new ServersListener(ois,oos,'B');
