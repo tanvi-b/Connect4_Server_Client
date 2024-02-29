@@ -34,7 +34,7 @@ public class Connect4Frame extends JFrame implements KeyListener {
         if(player == 'X')
             text = "Waiting for Black to Connect";
 
-        setSize(485,450);
+        setSize(800,700);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
@@ -53,10 +53,20 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
         // draws the circles to the screen
         g.setColor(Color.WHITE);
-        for(int y =0;y<6; y++)
-            g.drawOval(0,(y+1)*133,getWidth(),(y+1)*133);
-        for(int x =0;x<7; x++)
-            g.drawOval((x+1)*133,60,(x+1)*133,getHeight());
+        int circleWidth = 75;
+        int circleHeight = 75;
+        int startX = 75;
+        int startY = 100;
+        int spacingX = (getWidth()-75*2-7 * circleWidth)/6;
+        int spacingY = (getHeight()-75*2-6 * circleHeight)/5;
+
+        for (int y = 0; y < 6; y++) {
+            for (int x = 0; x < 7; x++) {
+                int circleX = startX + x * (circleWidth + spacingX);
+                int circleY = startY + y * (circleHeight + spacingY);
+                g.fillOval(circleX, circleY, circleWidth, circleHeight);
+            }
+        }
 
         // draws the player moves to the screen
         g.setFont(new Font("Times New Roman",Font.BOLD,70));
