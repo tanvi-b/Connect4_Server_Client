@@ -51,12 +51,12 @@ public class Connect4Frame extends JFrame implements KeyListener {
         g.setFont(new Font("Times New Roman",Font.BOLD,30));
         g.drawString(text,20,55);
 
-        // draws the tic-tac-toe grid lines to the screen
-        g.setColor(Color.RED);
+        // draws the circles to the screen
+        g.setColor(Color.WHITE);
         for(int y =0;y<6; y++)
-            g.drawLine(0,(y+1)*133+60,getWidth(),(y+1)*133+60);
+            g.drawOval(0,(y+1)*133,getWidth(),(y+1)*133);
         for(int x =0;x<7; x++)
-            g.drawLine((x+1)*133,60,(x+1)*133,getHeight());
+            g.drawOval((x+1)*133,60,(x+1)*133,getHeight());
 
         // draws the player moves to the screen
         g.setFont(new Font("Times New Roman",Font.BOLD,70));

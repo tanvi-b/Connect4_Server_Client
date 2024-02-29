@@ -33,9 +33,9 @@ public class ServersListener implements Runnable
 
                 // handle the received command
                 if(cfc.getCommand()==CommandFromClient.MOVE &&
-                        turn==player && !gameData.isWinner('X')
-                        && !gameData.isWinner('O')
-                        && !gameData.isCat())
+                        turn==player && !gameData.rowWin('X') && !gameData.columnWin('X') && !gameData.diagonalWin('X')
+                        && !gameData.rowWin('O') && !gameData.columnWin('O') && !gameData.diagonalWin('O')
+                        && !gameData.tieGame())
                 {
                     // pulls data for the move from the data field
                     String data=cfc.getData();
@@ -82,11 +82,11 @@ public class ServersListener implements Runnable
     public void checkGameOver()
     {
         int command = -1;
-        if(gameData.isCat())
+        if(gameData.tieGame())
             command = CommandFromServer.TIE;
-        else if(gameData.isWinner('X'))
+        else if(gameData.rowWin('X') || gameData.columnWin('X') || gameData.diagonalWin('X'))
             command = CommandFromServer.RED_WINS;
-        else if(gameData.isWinner('O'))
+        else if(gameData.rowWin('O') || gameData.columnWin('O') || gameData.diagonalWin('O'))
             command = CommandFromServer.BLACK_WINS;
 
         // if the game ended, informs both clients of the game's end state
