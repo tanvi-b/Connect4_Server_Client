@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
@@ -16,8 +18,7 @@ public class Connect4Frame extends JFrame implements KeyListener {
     // output stream to the server
     ObjectOutputStream os;
 
-    public Connect4Frame(GameData gameData, ObjectOutputStream os, char player)
-    {
+    public Connect4Frame(GameData gameData, ObjectOutputStream os, char player) {
         super("Connect4 Game");
         // sets the attributes
         this.gameData = gameData;
@@ -26,29 +27,30 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
         // adds a KeyListener to the Frame
         addKeyListener(this);
+        //adds a MouseListener to the Frame
+        //addMouseListener((MouseListener) this);
 
         // makes closing the frame close the program
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Set initial frame message
-        if(player == 'R')
+        if (player == 'R')
             text = "Waiting for Black to Connect";
 
-        setSize(800,700);
+        setSize(800, 700);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
     }
 
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         // draws the background
         g.setColor(Color.YELLOW);
-        g.fillRect(0,0,getWidth(),getHeight());
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         // draws the display text to the screen
         g.setColor(Color.BLUE);
-        g.setFont(new Font("Times New Roman",Font.BOLD,30));
+        g.setFont(new Font("Times New Roman", Font.BOLD, 30));
         FontMetrics fm = g.getFontMetrics();
         int textWidth = fm.stringWidth(text);
         int begin = (800 - textWidth) / 2;
@@ -60,8 +62,8 @@ public class Connect4Frame extends JFrame implements KeyListener {
         int circleHeight = 75;
         int startX = 75;
         int startY = 100;
-        int spacingX = (getWidth()-75*2-7 * circleWidth)/6;
-        int spacingY = (getHeight()-75*2-6 * circleHeight)/5;
+        int spacingX = (getWidth() - 75 * 2 - 7 * circleWidth) / 6;
+        int spacingY = (getHeight() - 75 * 2 - 6 * circleHeight) / 5;
 
         for (int y = 0; y < 6; y++) {
             for (int x = 0; x < 7; x++) {
@@ -71,7 +73,7 @@ public class Connect4Frame extends JFrame implements KeyListener {
             }
         }
 
-        // draws the player moves to the screen
+        //draws the player moves to the screen
         g.setFont(new Font("Times New Roman",Font.BOLD,70));
         for(int r=0; r<gameData.getGrid().length; r++)
             for(int c=0; c<gameData.getGrid().length; c++)
@@ -85,11 +87,10 @@ public class Connect4Frame extends JFrame implements KeyListener {
 
 
     public void setTurn(char turn) {
-        if(turn==player)
+        if (turn == player)
             text = "Your Turn";
-        else
-        {
-            if (turn=='R')
+        else {
+            if (turn == 'R')
                 text = "Red's Turn.";
             else
                 text = "Black's Turn.";
@@ -97,8 +98,7 @@ public class Connect4Frame extends JFrame implements KeyListener {
         repaint();
     }
 
-    public void makeMove(int c, int r, char letter)
-    {
+    public void makeMove(int c, int r, char letter) {
         gameData.getGrid()[r][c] = letter;
         repaint();
     }
@@ -110,56 +110,54 @@ public class Connect4Frame extends JFrame implements KeyListener {
         int c;
 
         // sets the row and column, based on the entered key
-        switch(key)
-        {
+        switch (key) {
             case '1':
-                r=0;
-                c=0;
+                r = 0;
+                c = 0;
                 break;
             case '2':
-                r=0;
-                c=1;
+                r = 0;
+                c = 1;
                 break;
             case '3':
-                r=0;
-                c=2;
+                r = 0;
+                c = 2;
                 break;
             case '4':
-                r=1;
-                c=0;
+                r = 1;
+                c = 0;
                 break;
             case '5':
-                r=1;
-                c=1;
+                r = 1;
+                c = 1;
                 break;
             case '6':
-                r=1;
-                c=2;
+                r = 1;
+                c = 2;
                 break;
             case '7':
-                r=2;
-                c=0;
+                r = 2;
+                c = 0;
                 break;
             case '8':
-                r=2;
-                c=1;
+                r = 2;
+                c = 1;
                 break;
             case '9':
-                r=2;
-                c=2;
+                r = 2;
+                c = 2;
                 break;
             default:
-                r=c=-1;
+                r = c = -1;
         }
         // if a valid enter was entered, send the move to the server
-        if(c!=-1) {
+        if (c != -1) {
             try {
                 os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + c + r + player));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
     }
 
     @Override
@@ -171,4 +169,32 @@ public class Connect4Frame extends JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+
+//    public void mousePressed(MouseEvent e) {
+//        int xCoor = e.getX();
+//        int yCoor = e.getY();
+//        int circleWidth = 75;
+//        int circleHeight = 75;
+//        int startX = 75;
+//        int startY = 100;
+//        int spacingX = (getWidth() - 75 * 2 - 7 * circleWidth) / 6;
+//        int spacingY = (getHeight() - 75 * 2 - 6 * circleHeight) / 5;
+//        for (int y = 0; y < 6; y++) {
+//            for (int x = 0; x < 7; x++) {
+//                int circleStartX = startX + x * (circleWidth + spacingX);
+//                int circleStartY = startY + y * (circleHeight + spacingY);
+//
+//                int circleEndX = circleStartX + 75;
+//                int circleEndY = circleStartY + 75;
+//
+//                if (xCoor > circleStartX && xCoor < circleEndX && xCoor > circleStartY && xCoor < circleEndY) {
+////                    char[][] grid = gameData.getGrid();
+////                    CommandFromServer cfs = (CommandFromServer) is.readObject();
+////                    if (cfs.getCommand() == CommandFromServer.RED_TURN)
+////                        grid[y][x] ==
+//                    //change grid to place the char of the player at [y][x]
+//                }
+//            }
+//        }
+//    }
 }
