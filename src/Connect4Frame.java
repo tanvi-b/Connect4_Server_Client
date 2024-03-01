@@ -1,14 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
 
-public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
+public class Connect4Frame extends JFrame implements MouseListener {
     // Display message
     private String text = "";
     // the letter you are playing as
@@ -26,8 +24,7 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
         this.os = os;
         this.player = player;
 
-        // adds a KeyListener to the Frame
-        addKeyListener(this);
+        // adds a MouseListener to the Frame
         addMouseListener(this);
         // makes closing the frame close the program
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -72,6 +69,7 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
                     g.setColor(Color.white);
                     g.fillOval(circleX, circleY, circleWidth, circleHeight);
                 }
+
                 if(gameData.getGrid()[y][x] == 'R'){
                     int circleX = startX + x * (circleWidth + spacingX);
                     int circleY = startY + y * (circleHeight + spacingY);
@@ -85,7 +83,6 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
                     g.setColor(Color.black);
                     g.fillOval(circleX, circleY, circleWidth, circleHeight);
                 }
-
             }
         }
 
@@ -100,8 +97,6 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
         this.text = text;
         repaint();
     }
-
-
 
 
     public void setTurn(char turn) {
@@ -124,76 +119,6 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
     }
 
     @Override
-    public void keyTyped(KeyEvent event) {
-        char key = event.getKeyChar();
-        int r;
-        int c;
-
-        // sets the row and column, based on the entered key
-        switch(key)
-        {
-            case '1':
-                r=0;
-                c=0;
-                break;
-            case '2':
-                r=0;
-                c=1;
-                break;
-            case '3':
-                r=0;
-                c=2;
-                break;
-            case '4':
-                r=1;
-                c=0;
-                break;
-            case '5':
-                r=1;
-                c=1;
-                break;
-            case '6':
-                r=1;
-                c=2;
-                break;
-            case '7':
-                r=2;
-                c=0;
-                break;
-            case '8':
-                r=2;
-                c=1;
-                break;
-            case '9':
-                r=2;
-                c=2;
-                break;
-            default:
-                r=c=-1;
-        }
-        // if a valid enter was entered, send the move to the server
-        if(c!=-1) {
-            try {
-                os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + c + r + player));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
-
-
-    @Override
     public void mouseClicked(MouseEvent e) {
 
     }
@@ -201,15 +126,12 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
     public void mousePressed(MouseEvent e){
         System.out.println("Testing Purposes: Mouse Pressed");
         int x = e.getX();
-
         int spacingX = (getWidth()-75*2-7 * 75)/6;
-
         int r = -1;
         int c = -1;
 
-
         if(x>=75 && x<=150){
-            for(int i =0; i<6; i++){
+            for(int i =5; i>=0; i--){
                 if(gameData.getGrid()[i][0] == ' '){
                     r =i;
                     c=0;
@@ -218,8 +140,8 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
             }
         }
 
-        if(x>=150+spacingX && x<=){
-            for(int i =0; i<6; i++){
+        if(x>=150+spacingX && x<=225+spacingX){
+            for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][1] == ' '){
                     r =i;
                     c=1;
@@ -228,9 +150,8 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
             }
         }
 
-
-        if(){
-            for(int i =0; i<6; i++){
+        if(x>=225+spacingX && x<=300+spacingX){
+            for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][2] == ' '){
                     r =i;
                     c=2;
@@ -239,8 +160,8 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
             }
         }
 
-        if(){
-            for(int i =0; i<6; i++){
+        if(x>=300+spacingX && x<=375+spacingX){
+            for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][3] == ' '){
                     r =i;
                     c=3;
@@ -249,9 +170,8 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
             }
         }
 
-
-        if(){
-            for(int i =0; i<6; i++){
+        if(x>=375+spacingX && x<=450+spacingX){
+            for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][4] == ' '){
                     r =i;
                     c=4;
@@ -260,8 +180,8 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
             }
         }
 
-        if(){
-            for(int i =0; i<6; i++){
+        if(x>=450+spacingX && x<=525+spacingX){
+            for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][5] == ' '){
                     r =i;
                     c=5;
@@ -270,11 +190,11 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
             }
         }
 
-        if(){
-            for(int i =0; i<6; i++){
-                if(gameData.getGrid()[i][7] == ' '){
+        if(x>=525+spacingX && x<=600+spacingX){
+            for(int i =5; i>=0; i++){
+                if(gameData.getGrid()[i][6] == ' '){
                     r =i;
-                    c=7;
+                    c=6;
                     break;
                 }
             }
@@ -287,8 +207,6 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
                 y.printStackTrace();
             }
         }
-
-
     }
 
     @Override
@@ -305,6 +223,4 @@ public class Connect4Frame extends JFrame implements KeyListener, MouseListener{
     public void mouseExited(MouseEvent e) {
 
     }
-
-
 }

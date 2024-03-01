@@ -33,8 +33,8 @@ public class ServersListener implements Runnable
 
                 // handle the received command
                 if(cfc.getCommand()==CommandFromClient.MOVE &&
-                        turn==player && !gameData.rowWin('X') && !gameData.columnWin('X') && !gameData.diagonalWin('X')
-                        && !gameData.rowWin('O') && !gameData.columnWin('O') && !gameData.diagonalWin('O')
+                        turn==player && !gameData.rowWin('R') && !gameData.columnWin('R') && !gameData.diagonalWin('R')
+                        && !gameData.rowWin('B') && !gameData.columnWin('B') && !gameData.diagonalWin('B')
                         && !gameData.tieGame())
                 {
                     // pulls data for the move from the data field
@@ -67,13 +67,13 @@ public class ServersListener implements Runnable
     public void changeTurn()
     {
         // changes the turn
-        if(turn=='X')
-            turn = 'O';
+        if(turn=='R')
+            turn = 'B';
         else
-            turn ='X';
+            turn ='R';
 
         // informs both client of the new player turn
-        if (turn == 'X')
+        if (turn == 'R')
             sendCommand(new CommandFromServer(CommandFromServer.RED_TURN, null));
         else
             sendCommand(new CommandFromServer(CommandFromServer.BLACK_TURN, null));
@@ -84,9 +84,9 @@ public class ServersListener implements Runnable
         int command = -1;
         if(gameData.tieGame())
             command = CommandFromServer.TIE;
-        else if(gameData.rowWin('X') || gameData.columnWin('X') || gameData.diagonalWin('X'))
+        else if(gameData.rowWin('R') || gameData.columnWin('R') || gameData.diagonalWin('R'))
             command = CommandFromServer.RED_WINS;
-        else if(gameData.rowWin('O') || gameData.columnWin('O') || gameData.diagonalWin('O'))
+        else if(gameData.rowWin('B') || gameData.columnWin('B') || gameData.diagonalWin('B'))
             command = CommandFromServer.BLACK_WINS;
 
         // if the game ended, informs both clients of the game's end state
