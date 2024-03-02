@@ -119,13 +119,14 @@ public class Connect4Frame extends JFrame implements MouseListener {
 
     public void mousePressed(MouseEvent e){
         System.out.println("Testing Purposes: Mouse Pressed");
-        for (int r = 0; r<6; r++)
-        {
-            for (int c= 0; c<7; c++)
-            {
-                System.out.print(gameData.getGrid()[r][c]);
+        for (int i = 0; i<6; i++) {
+            for (int j = 0; j<7; j++) {
+                if (gameData.getGrid()[i][j]==' ')
+                    System.out.print('-');
+                else
+                    System.out.print(gameData.getGrid()[i][j]);
             }
-            System.out.println("\n");
+            System.out.println();
         }
         int x = e.getX();
         int r = -1;
@@ -142,7 +143,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         }
 
         if(x>=170 && x<=245){
-            for(int i =5; i>=0; i++){
+            for(int i =5; i>=0; i--){
                 if(gameData.getGrid()[i][1] == ' '){
                     r =i;
                     c=1;
@@ -152,7 +153,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         }
 
         if(x>=265 && x<=340){
-            for(int i =5; i>=0; i++){
+            for(int i =5; i>=0; i--){
                 if(gameData.getGrid()[i][2] == ' '){
                     r =i;
                     c=2;
@@ -162,7 +163,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         }
 
         if(x>=360 && x<=435){
-            for(int i =5; i>=0; i++){
+            for(int i =5; i>=0; i--){
                 if(gameData.getGrid()[i][3] == ' '){
                     r =i;
                     c=3;
@@ -172,7 +173,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         }
 
         if(x>=455 && x<=530){
-            for(int i =5; i>=0; i++){
+            for(int i =5; i>=0; i--){
                 if(gameData.getGrid()[i][4] == ' '){
                     r =i;
                     c=4;
@@ -182,7 +183,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         }
 
         if(x>=550 && x<=625){
-            for(int i =5; i>=0; i++){
+            for(int i =5; i>=0; i--){
                 if(gameData.getGrid()[i][5] == ' '){
                     r =i;
                     c=5;
@@ -192,7 +193,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         }
 
         if(x>=645 && x<=720){
-            for(int i =5; i>=0; i++){
+            for(int i =5; i>=0; i--){
                 if(gameData.getGrid()[i][6] == ' '){
                     r =i;
                     c=6;
@@ -204,7 +205,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         if(c!=-1) {
             try {
                 os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + c + r + player));
-                makeMove(c, r, player);
+                //makeMove(c, r, player);
             } catch (Exception y) {
                 y.printStackTrace();
             }
