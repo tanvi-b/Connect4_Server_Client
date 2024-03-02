@@ -2,8 +2,10 @@ import java.io.Serializable;
 
 public class CommandFromClient implements Serializable
 {
+    //The command being sent to the server
     private int command;
-    private String data ="";
+    //Text data for the command
+    private String data = "";
 
     public static final int MOVE    =0;
     public static final int RESTART =1;

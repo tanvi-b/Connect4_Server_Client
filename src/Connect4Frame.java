@@ -58,7 +58,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         int circleHeight = 75;
         int startX = 75;
         int startY = 100;
-        int spacingX = (getWidth()-75*2-7 * circleWidth)/6;
+        int spacingX = 20;
         int spacingY = (getHeight()-75*2-6 * circleHeight)/5;
 
         for (int y = 0; y < 6; y++) {
@@ -85,12 +85,6 @@ public class Connect4Frame extends JFrame implements MouseListener {
                 }
             }
         }
-
-        // draws the player moves to the screen
-        g.setFont(new Font("Times New Roman",Font.BOLD,70));
-        for(int r=0; r<gameData.getGrid().length; r++)
-            for(int c=0; c<gameData.getGrid().length; c++)
-                g.drawString(""+gameData.getGrid()[r][c],c*133+42,r*133+150);
     }
 
     public void setText(String text) {
@@ -125,8 +119,15 @@ public class Connect4Frame extends JFrame implements MouseListener {
 
     public void mousePressed(MouseEvent e){
         System.out.println("Testing Purposes: Mouse Pressed");
+        for (int r = 0; r<6; r++)
+        {
+            for (int c= 0; c<7; c++)
+            {
+                System.out.print(gameData.getGrid()[r][c]);
+            }
+            System.out.println("\n");
+        }
         int x = e.getX();
-        int spacingX = (getWidth()-75*2-7 * 75)/6;
         int r = -1;
         int c = -1;
 
@@ -140,7 +141,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
             }
         }
 
-        if(x>=150+spacingX && x<=225+spacingX){
+        if(x>=170 && x<=245){
             for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][1] == ' '){
                     r =i;
@@ -150,7 +151,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
             }
         }
 
-        if(x>=225+spacingX && x<=300+spacingX){
+        if(x>=265 && x<=340){
             for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][2] == ' '){
                     r =i;
@@ -160,7 +161,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
             }
         }
 
-        if(x>=300+spacingX && x<=375+spacingX){
+        if(x>=360 && x<=435){
             for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][3] == ' '){
                     r =i;
@@ -170,7 +171,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
             }
         }
 
-        if(x>=375+spacingX && x<=450+spacingX){
+        if(x>=455 && x<=530){
             for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][4] == ' '){
                     r =i;
@@ -180,7 +181,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
             }
         }
 
-        if(x>=450+spacingX && x<=525+spacingX){
+        if(x>=550 && x<=625){
             for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][5] == ' '){
                     r =i;
@@ -190,7 +191,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
             }
         }
 
-        if(x>=525+spacingX && x<=600+spacingX){
+        if(x>=645 && x<=720){
             for(int i =5; i>=0; i++){
                 if(gameData.getGrid()[i][6] == ' '){
                     r =i;
@@ -203,6 +204,7 @@ public class Connect4Frame extends JFrame implements MouseListener {
         if(c!=-1) {
             try {
                 os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + c + r + player));
+                makeMove(c, r, player);
             } catch (Exception y) {
                 y.printStackTrace();
             }
