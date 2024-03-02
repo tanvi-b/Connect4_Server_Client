@@ -226,4 +226,8 @@ public class Connect4Frame extends JFrame implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
+    public char getPlayer() {
+        return player;
+    }
 }
