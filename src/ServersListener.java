@@ -32,6 +32,27 @@ public class ServersListener implements Runnable
                 CommandFromClient cfc = (CommandFromClient) is.readObject();
 
                 // handle the received command
+                if (cfc.getCommand() == CommandFromClient.MOVE && turn == player &&
+                        (gameData.rowWin('R') || gameData.columnWin('R') || gameData.diagonalWin('R') ||
+                                gameData.rowWin('B') || gameData.columnWin('B') || gameData.diagonalWin('B') ||
+                                gameData.tieGame()))
+                {
+                    // pulls data for the move from the data field
+                    String data=cfc.getData();
+                    int c = data.charAt(0) - '0';
+                    int r = data.charAt(1) - '0';
+
+                    // if the move is invalid it, do not process it
+                    if(gameData.getGrid()[r][c]!=' ')
+                        continue;
+
+                    if (turn=='R')
+                        sendCommand(new CommandFromServer(CommandFromServer.RESTART_RED,data));
+                    else
+                        sendCommand(new CommandFromServer(CommandFromServer.RESTART_BLACK,data));
+                    //changeTurn();
+                }
+
                 if(cfc.getCommand()==CommandFromClient.MOVE &&
                         turn==player && !gameData.rowWin('R') && !gameData.columnWin('R') && !gameData.diagonalWin('R')
                         && !gameData.rowWin('B') && !gameData.columnWin('B') && !gameData.diagonalWin('B')

@@ -205,7 +205,6 @@ public class Connect4Frame extends JFrame implements MouseListener {
         if(c!=-1) {
             try {
                 os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + c + r + player));
-                //makeMove(c, r, player);
             } catch (Exception y) {
                 y.printStackTrace();
             }

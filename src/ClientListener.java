@@ -40,9 +40,27 @@ public class ClientListener implements Runnable {
                     else
                         frame.setText("You Lose!");
                 }
+                else if (cfs.getCommand()==CommandFromServer.RESTART_RED)
+                {
+                    if (frame.getPlayer() == 'R')
+                        frame.setText("Waiting for Black to agree to a new game.");
+                    else
+                        frame.setText("Red is ready. Right click to start a new game.");
+                }
+                else if (cfs.getCommand()==CommandFromServer.RESTART_BLACK)
+                {
+                    if (frame.getPlayer() == 'B')
+                        frame.setText("Waiting for Red to agree to a new game.");
+                    else
+                        frame.setText("Black is ready. Right click to start a new game.");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
+//Waiting for ___ to agree to a new game
+//___ is ready, right click to start a new game
+//___ quit. Shutting down in: 5 4 3 2 1 0
