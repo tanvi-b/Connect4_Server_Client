@@ -138,7 +138,9 @@ public class Connect4Frame extends JFrame implements MouseListener, WindowListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
-            if (e.getButton()==3)
+            if (e.getButton()==3 && (gameData.tieGame() ||
+                                    gameData.rowWin('R') || gameData.columnWin('R') || gameData.diagonalWin('R') ||
+                                    gameData.rowWin('B') || gameData.columnWin('B') || gameData.diagonalWin('B')))
             {
                 try
                 {
