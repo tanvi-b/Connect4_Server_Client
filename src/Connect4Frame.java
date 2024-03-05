@@ -1,12 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.ObjectInputStream;
+import java.awt.event.*;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Collections;
+import java.util.Arrays;
 
-public class Connect4Frame extends JFrame implements MouseListener {
+public class Connect4Frame extends JFrame implements MouseListener, WindowListener {
     // Display message
     private String text = "";
     // the letter you are playing as
@@ -15,19 +14,29 @@ public class Connect4Frame extends JFrame implements MouseListener {
     private GameData gameData = null;
     // output stream to the server
     ObjectOutputStream os;
+    private char framePlayer;
+    private char turn = 'R';
+    private Timer countdownTimer;
+    private char[][] grid;
+    private boolean isConnected;
 
-    public Connect4Frame(GameData gameData, ObjectOutputStream os, char player)
+    public Connect4Frame(GameData gameData, ObjectOutputStream os, char player, char[][] grid)
     {
         super("Connect4 Game");
         // sets the attributes
         this.gameData = gameData;
+        this.grid = grid;
         this.os = os;
         this.player = player;
 
         // adds a MouseListener to the Frame
         addMouseListener(this);
+        addWindowListener(this);
+        isConnected = true;
         // makes closing the frame close the program
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        countdownTimer = new Timer(1000, null);
+        countdownTimer.setInitialDelay(0);
 
         // Set initial frame message
         if(player == 'R')
@@ -41,6 +50,10 @@ public class Connect4Frame extends JFrame implements MouseListener {
 
     public void paint(Graphics g)
     {
+        if (!isConnected) {
+            return;
+        }
+
         // draws the background
         g.setColor(Color.YELLOW);
         g.fillRect(0,0,getWidth(),getHeight());
@@ -106,6 +119,17 @@ public class Connect4Frame extends JFrame implements MouseListener {
         repaint();
     }
 
+    public void reset()
+    {
+        gameData.reset();
+    }
+
+
+    public GameData getGameData()
+    {
+        return gameData;
+    }
+
     public void makeMove(int c, int r, char letter)
     {
         gameData.getGrid()[r][c] = letter;
@@ -114,7 +138,20 @@ public class Connect4Frame extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+            if (e.getButton()==3)
+            {
+                try
+                {
+                    if (player=='R')
+                        os.writeObject(new CommandFromClient(CommandFromClient.RED_RESTART, "" + player));
+                    else
+                        os.writeObject(new CommandFromClient(CommandFromClient.BLACK_RESTART, "" + player));
+                }
+                catch (Exception c)
+                {
+                    c.printStackTrace();
+                }
+            }
     }
 
     public void mousePressed(MouseEvent e){
@@ -228,5 +265,52 @@ public class Connect4Frame extends JFrame implements MouseListener {
 
     public char getPlayer() {
         return player;
+    }
+
+    public void setPlayer(char player) {
+        player = player;
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent evt)
+    {
+        if(framePlayer=='P')
+        {
+            try {
+                os.writeObject(new CommandFromClient(CommandFromClient.RED_DISC, "" + player));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

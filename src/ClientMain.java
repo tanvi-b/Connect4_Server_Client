@@ -20,9 +20,9 @@ public class ClientMain {
 
             // create the frame based on which player the server says this client is
             if (cfs.getCommand()==CommandFromServer.CONNECTED_AS_RED)
-                frame = new Connect4Frame(gameData, os, 'R');
+                frame = new Connect4Frame(gameData, os, 'R', gameData.getGrid());
             else
-                frame = new Connect4Frame(gameData, os,'B');
+                frame = new Connect4Frame(gameData, os,'B', gameData.getGrid());
 
             ClientListener cl = new ClientListener (is, os, frame);
             Thread t = new Thread(cl);

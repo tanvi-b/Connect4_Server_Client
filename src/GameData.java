@@ -2,6 +2,7 @@ public class GameData {
     private char[][] grid = {{' ', ' ', ' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                             {' ', ' ', ' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                             {' ', ' ', ' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' ', ' ', ' '}};
+    private boolean gameOver = false;
     public char[][] getGrid() {return grid;}
     public void reset()
     {
@@ -9,6 +10,10 @@ public class GameData {
         for (int r=0; r<grid.length; r++)
             for (int c=0; c<grid[0].length; c++)
                 grid[r][c]= ' ';
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
     public boolean tieGame ()
     {
@@ -42,8 +47,10 @@ public class GameData {
         {
             for(int c = 0; c < grid[0].length; c++)
             {
-                if (grid[r][c]==player && grid[r-1][c]==player && grid[r-2][c]==player && grid[r-3][c]==player)
+                if (grid[r][c]==player && grid[r-1][c]==player && grid[r-2][c]==player && grid[r-3][c]==player) {
+                    gameOver = true;
                     return true;
+                }
             }
             r--;
         }
@@ -57,8 +64,10 @@ public class GameData {
         {
             for(int r = 0; r < grid.length; r++)
             {
-                if (grid[r][c]==player && grid[r][c+1]==player && grid[r][c+2]==player && grid[r][c+3]==player)
+                if (grid[r][c]==player && grid[r][c+1]==player && grid[r][c+2]==player && grid[r][c+3]==player) {
+                    gameOver = true;
                     return true;
+                }
             }
             c++;
         }
@@ -74,8 +83,10 @@ public class GameData {
                 if (grid[r][c]==player
                         && grid[r-1][c+1]==player
                         && grid[r-2][c+2]==player
-                        && grid[r-3][c+3]==player)
+                        && grid[r-3][c+3]==player) {
+                    gameOver = true;
                     return true;
+                }
             }
         }
 
@@ -83,8 +94,10 @@ public class GameData {
         {
             for(int c = grid[0].length-1; c>grid[0].length-5; c--)
             {
-                if (grid[r][c]==player && grid[r-1][c-1]==player && grid[r-2][c-2]==player && grid[r-3][c-3]==player)
+                if (grid[r][c]==player && grid[r-1][c-1]==player && grid[r-2][c-2]==player && grid[r-3][c-3]==player) {
+                    gameOver = true;
                     return true;
+                }
             }
         }
         return false;
